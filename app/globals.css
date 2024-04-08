@@ -1,3 +1,79 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Styling for Headings */
+
+/* Global Heading Styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6, p, hr {
+  margin-top: 0 !important; /* Remove default margin */
+  margin-bottom: 0.5em !important; /* Add spacing below heading */
+}
+
+/* Specific Heading Styles */
+
+/* Heading 1 */
+h1 {
+  font-size: 2.5em; /* Adjust size as needed */
+  font-weight: bold; /* Apply bold font weight */
+  color: #333; /* Change color as needed */
+}
+
+/* Heading 2 */
+h2 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Heading 3 */
+h3 {
+  font-size: 1.75em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Heading 4 */
+h4 {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Heading 5 */
+h5 {
+  font-size: 1.25em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Heading 6 */
+h6 {
+  font-size: 1em;
+  font-weight: bold;
+  color: #333;
+}
+
+
+.prose {
+    max-width: 80ch;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    
+}
+
+main {
+    padding-top: 60px;
+}
