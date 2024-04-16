@@ -2,6 +2,7 @@ import { allPosts } from "@/.contentlayer/generated"
 import Link from "next/link"
 
 export default function Home() {
+
   return (
     <div className="pt-3">
       {allPosts.map((post) => (
@@ -11,6 +12,7 @@ export default function Home() {
             <h2>{post.title}</h2>
           </Link>
           {post.description && <p>{post.description}</p>}
+          {post.date && <p>{post.date}</p>}
         </article>
         
         <hr className="" /></>

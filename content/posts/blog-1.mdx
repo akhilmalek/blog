@@ -1,80 +1,82 @@
 ---
-title: Blog 1
-description: Blog 1 description
+title: Use of :has() in CSS
+description: The :has() pseudo-class is a powerful CSS selector that is part of the CSS Selectors Level 4 specification. It provides a way to select an element based on the contents of its descendants, something that was previously only possible using JavaScript or by restructuring HTML to facilitate specific styling. This pseudo-class enables more complex styling scenarios directly within CSS, improving the ability to maintain and manage stylesheets.
 date: 2022-01-01
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In congue orci quis malesuada rhoncus. Nullam congue commodo turpis, in luctus lectus euismod interdum. Fusce et tortor lacus. Proin bibendum ipsum lorem, nec tincidunt odio semper id. Cras in nisi mauris. Aliquam a pharetra risus. Etiam hendrerit, felis a tincidunt viverra, risus purus eleifend lorem, at mollis tellus risus sit amet eros. Nam convallis arcu augue, vitae consequat erat congue eget. Nulla facilisi. Vivamus eu mattis turpis, ac rhoncus metus. Duis ac vulputate urna. Donec hendrerit nisi at massa condimentum iaculis. Praesent pellentesque dapibus blandit. Nunc nec leo vestibulum, tempus leo sit amet, sagittis libero. Nulla eget metus quam.
+![Alt text](https://plus.unsplash.com/premium_photo-1661877737564-3dfd7282efcb?q=80&w=2100&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "title")
 
+### How the `:has()` Pseudo-Class Works
 
-![Alt text](../../../blog-post-1.jpg "title")
+The `:has()` selector allows you to select an element if it contains another element that matches a specific selector passed as an argument. For example:
 
-> A Website design
-
-```tsx
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>One Page Website</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <!-- Header Section -->
-    <header>
-        <div class="container">
-            <div class="logo">
-                <img src="logo.png" alt="Logo">
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Main Content Section -->
-    <main>
-        <section id="home">
-            <div class="container">
-                <!-- Content goes here -->
-                <button id="openModal">Open Modal</button>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer Section -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 One Page Website</p>
-            <div class="social-media">
-                <!-- Social media icons -->
-            </div>
-        </div>
-    </footer>
-
-    <!-- Product Details Modal -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <!-- Modal content goes here -->
-            <span class="close">&times;</span>
-        </div>
-    </div>
-
-    <!-- Contact Form Modal -->
-    <div id="contactModal" class="modal">
-        <div class="modal-content">
-            <!-- Modal content goes here -->
-            <span class="close">&times;</span>
-        </div>
-    </div>
-
-    <script src="scripts.js"></script>
-</body>
-</html>
+```css
+/* Selects any <div> that contains a <p> element */
+div:has(p) {
+    background-color: yellow;
+}
 ```
+
+This will apply a background color of yellow to any `<div>` that has at least one `<p>` tag inside it.
+
+### Syntax of `:has()`
+
+The syntax for `:has()` is relatively straightforward:
+
+```css
+element:has(selector) {
+    /* styles */
+}
+```
+
+- `element` can be any valid CSS selector.
+- `selector` inside the `:has()` can be a wide variety of selectors, including class, id, attribute, and even other pseudo-classes.
+
+### Limitations and Browser Support
+
+As of my last update, `:has()` is still not widely supported in all browsers, especially in older versions. It is essential to check the latest browser compatibility before using it in production environments. Support is improving, and modern browsers are gradually adopting this feature, which is a part of the CSS Selectors Level 4 specification.
+
+### Use Cases for `:has()`
+
+1. **Styling Parent Elements Based on Child Content:**
+   ```css
+   /* Styling a list item if it contains a link with a specific class */
+   li:has(a.active) {
+       font-weight: bold;
+   }
+   ```
+
+2. **Conditional Layouts:**
+   ```css
+   /* Only apply styles if a div contains an image */
+   div:has(img) {
+       padding: 20px;
+       border: 1px solid #ccc;
+   }
+   ```
+
+3. **Negation and Complex Selectors:**
+   ```css
+   /* Style sections that do not have a header */
+   section:not(:has(header)) {
+       padding-top: 50px;
+   }
+   ```
+
+4. **Enhanced Form Styling:**
+   ```css
+   /* Style form labels that have input fields with content */
+   label:has(input[value!=""]) {
+       color: green;
+   }
+   ```
+
+### Practical Tips
+
+- **Fallbacks:** Since `:has()` is not supported in all browsers, it's crucial to provide fallback styles for browsers that do not support it.
+- **JavaScript Alternative:** For critical functionality or styling that depends on `:has()` and must work in non-supporting browsers, consider using JavaScript as a fallback.
+- **Performance Considerations:** Be cautious with the extensive use of `:has()` as it might impact rendering performance, especially with complex nested selectors or on large DOM structures.
+
+### Conclusion
+
+The `:has()` pseudo-class represents a significant advancement in CSS, offering new ways to approach styling that were previously not possible without external scripts. As browser support increases, it will undoubtedly become a staple in the CSS toolkit, enabling cleaner, more semantic HTML and more dynamic CSS-driven designs.
