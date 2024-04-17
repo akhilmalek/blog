@@ -27,7 +27,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <header className="max-w-4xl m-auto py-4 px-4 bg-white dark:bg-slate-950">
               <div className="flex items-center justify-between">
                 <div className="nav-barnd">
-                <Link href="/" className="font-bold	text-xl	">Logo</Link>
+                <Link href="/" className="font-bold	text-xl	">Frontend Forge</Link>
                 </div>
                
                 <nav className="ml-auto text-sm font-medium space-x-6">
