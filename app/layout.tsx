@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: "Frontend Forge",
   description: "I share insights and tips to empower aspiring and seasoned developers alike",
-  keywokds: 'CSS Tricks, HTML5 Best Practices, User Interface Design, UX/UI Tips, Coding for Beginners, Advanced CSS Techniques, Frontend Frameworks, Web Design Tips',
+  keywords: 'CSS Tricks, HTML5 Best Practices, User Interface Design, UX/UI Tips, Coding for Beginners, Advanced CSS Techniques, Frontend Frameworks, Web Design Tips',
 }
 
 interface RootLayoutProps {
