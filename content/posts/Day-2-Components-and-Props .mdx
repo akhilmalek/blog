@@ -1,0 +1,65 @@
+---
+title: Day 2: Components and Props 
+description: Components: Building blocks of React applications, which can be either functional or class-based.
+Props: Short for properties, these are used to pass data from parent to child components.
+date: 2024-07-03
+keywords: Components and Props
+---
+
+### Day 2: Components and Props
+
+**Description:**
+- **Components:** Building blocks of React applications, which can be either functional or class-based.
+- **Props:** Short for properties, these are used to pass data from parent to child components.
+
+**Example:**
+
+1. **Functional Component:**
+
+```jsx
+// src/components/Greeting.js
+import React from 'react';
+
+const Greeting = ({ name }) => {
+  return <h1>Hello, {name}!</h1>;
+};
+
+export default Greeting;
+```
+
+2. **Class Component:**
+
+```jsx
+// src/components/GreetingClass.js
+import React, { Component } from 'react';
+
+class GreetingClass extends Component {
+  render() {
+    return <h1>Hello, {this.props.name}!</h1>;
+  }
+}
+
+export default GreetingClass;
+```
+
+3. **Using Props:**
+
+```jsx
+// src/App.js
+import React from 'react';
+import Greeting from './components/Greeting';
+import GreetingClass from './components/GreetingClass';
+
+function App() {
+  return (
+    <div>
+      <Greeting name="Aakhil" />
+      <GreetingClass name="Aakhil" />
+    </div>
+  );
+}
+
+export default App;
+```
+
+In this example, `Greeting` and `GreetingClass` are components that receive the `name` prop and display it. The `App` component passes the `name` prop to both components.
