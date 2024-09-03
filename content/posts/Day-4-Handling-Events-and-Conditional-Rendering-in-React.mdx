@@ -1,0 +1,161 @@
+---
+title: Day 4 Handling Events and Conditional Rendering in React
+description: Building blocks of React applications, which can be either functional or class-based.
+date: 2024-07-01
+keywords: Components and Props
+---
+
+Today, you will focus on mastering event handling and conditional rendering in React, two essential concepts that allow you to build interactive and dynamic user interfaces.
+
+### Topics to Cover
+
+1. **Handling Events in React:**
+   - Understanding event handling in React.
+   - Differences between HTML and React event handling.
+   - Common event handlers (`onClick`, `onChange`, `onSubmit`, etc.).
+   - Passing arguments to event handlers.
+
+2. **Conditional Rendering:**
+   - How to conditionally render components or elements.
+   - Using JavaScript operators for conditional rendering (`if-else`, ternary operator, logical `&&`).
+   - Best practices for managing multiple conditions.
+
+### Detailed Examples
+
+#### 1. **Handling Events:**
+
+Let’s start by creating a simple button click event handler:
+
+```jsx
+import React, { useState } from 'react';
+
+function ToggleButton() {
+  const [isOn, setIsOn] = useState(false);
+
+  const handleClick = () => {
+    setIsOn(!isOn);
+  };
+
+  return (
+    <button onClick={handleClick}>
+      {isOn ? 'ON' : 'OFF'}
+    </button>
+  );
+}
+
+export default ToggleButton;
+```
+
+- **Explanation:** 
+  - The `useState` hook initializes a state variable `isOn` to track whether the button is "ON" or "OFF".
+  - The `handleClick` function toggles the `isOn` state between `true` and `false`.
+  - The button’s text is conditionally rendered based on the `isOn` state.
+
+#### 2. **Conditional Rendering:**
+
+Let’s create a component that conditionally renders a greeting message based on user login status:
+
+```jsx
+import React, { useState } from 'react';
+
+function Greeting() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
+  return (
+    <div>
+      {isLoggedIn ? (
+        <h1>Welcome back!</h1>
+      ) : (
+        <h1>Please sign in.</h1>
+      )}
+      <button onClick={isLoggedIn ? handleLogout : handleLogin}>
+        {isLoggedIn ? 'Logout' : 'Login'}
+      </button>
+    </div>
+  );
+}
+
+export default Greeting;
+```
+
+- **Explanation:**
+  - The `Greeting` component manages a boolean state `isLoggedIn`.
+  - Based on the `isLoggedIn` state, it conditionally renders either "Welcome back!" or "Please sign in."
+  - The button toggles between "Login" and "Logout" based on the user’s state.
+
+#### 3. **Handling Form Events:**
+
+Create a simple form that handles user input:
+
+```jsx
+import React, { useState } from 'react';
+
+function LoginForm() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Logging in as: ${username}`);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>
+          Username:
+          <input 
+            type="text" 
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)} 
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Password:
+          <input 
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+          />
+        </label>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  );
+}
+
+export default LoginForm;
+```
+
+- **Explanation:**
+  - The `LoginForm` component handles user input for username and password.
+  - The form submission is handled by `handleSubmit`, which prevents the default form behavior and displays an alert with the entered username.
+
+### Practical Tasks
+
+1. **Event Handling:**
+   - Create a button that shows an alert with a custom message when clicked.
+   - Build a form that captures user input and displays it below the form in real-time.
+
+2. **Conditional Rendering:**
+   - Create a simple app that displays different messages based on the time of day (e.g., "Good Morning", "Good Afternoon", "Good Evening").
+   - Implement a feature that shows or hides additional content (e.g., a details section) when a button is clicked.
+
+### Resources
+
+- [React Docs: Handling Events](https://reactjs.org/docs/handling-events.html)
+- [React Docs: Conditional Rendering](https://reactjs.org/docs/conditional-rendering.html)
+
+---
+
+This day will deepen your understanding of how to make your React applications interactive and responsive to user actions, while also dynamically changing the content displayed based on certain conditions. Ready to start Day 4?
