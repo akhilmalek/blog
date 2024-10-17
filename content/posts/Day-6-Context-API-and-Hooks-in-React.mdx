@@ -1,0 +1,247 @@
+---
+title: Day 6 Context API and Hooks in React
+description: Today’s focus will be on React’s Context API and Hooks. These are essential for managing state and side effects in functional components, and they allow for better state management and sharing state across components without prop drilling.
+date: 2024-07-03
+keywords: Context API
+---
+
+
+### 1. **Context API**
+
+#### **Description**:
+The Context API provides a way to share data (state) between components without passing props manually at every level. It is used when some data needs to be accessible by many components in the component tree.
+
+#### **Key Terms**:
+- **Context**: The container for your shared data.
+- **Provider**: The component that wraps parts of your app and provides the context data to its children.
+- **Consumer**: A component that can read and use the context data.
+
+#### **Example**:
+
+1. **Creating a Context**:
+
+```jsx
+import React, { createContext, useState } from 'react';
+
+// Create the context
+const ThemeContext = createContext();
+
+function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light'); // Shared state
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export { ThemeContext, ThemeProvider };
+```
+
+2. **Consuming Context**:
+
+```jsx
+import React, { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
+function ThemeToggle() {
+  const { theme, setTheme } = useContext(ThemeContext); // Access context
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  return (
+    <div>
+      <p>Current Theme: {theme}</p>
+      <button onClick={toggleTheme}>Toggle Theme</button>
+    </div>
+  );
+}
+
+export default ThemeToggle;
+```
+
+3. **Using the Provider in your App**:
+
+```jsx
+import React from 'react';
+import { ThemeProvider } from './ThemeContext';
+import ThemeToggle from './ThemeToggle';
+
+function App() {
+  return (
+    <ThemeProvider>
+      <ThemeToggle />
+    </ThemeProvider>
+  );
+}
+
+export default App;
+```
+
+---
+
+### 2. **React Hooks**
+
+#### **Description**:
+Hooks let you use state and other React features in functional components. The most common hooks are `useState`, `useEffect`, and `useContext`, but there are others like `useMemo`, `useReducer`, and `useRef` that provide more advanced capabilities.
+
+#### **Commonly Used Hooks**:
+
+- **useState**: Adds state to functional components.
+- **useEffect**: Runs side effects like fetching data, subscribing to events, or manually updating the DOM.
+- **useContext**: Consumes context data provided by a `Context.Provider`.
+
+---
+
+### 3. **useState Hook**
+
+#### **Description**:
+The `useState` hook allows you to add state to functional components. It returns an array with two elements: the current state and a function to update that state.
+
+#### **Example**:
+
+```jsx
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0); // Declare state
+
+  const increment = () => setCount(count + 1);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+---
+
+### 4. **useEffect Hook**
+
+#### **Description**:
+The `useEffect` hook allows you to perform side effects in function components, such as fetching data from an API, setting up a subscription, or updating the document title. It runs after the render and can be configured to run only when certain values change.
+
+#### **Example**:
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function DataFetcher() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('https://api.example.com/data')
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      });
+  }, []); // Empty array means the effect runs once on mount
+
+  if (loading) return <p>Loading...</p>;
+
+  return (
+    <ul>
+      {data.map((item) => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  );
+}
+
+export default DataFetcher;
+```
+
+---
+
+### 5. **useContext Hook**
+
+#### **Description**:
+The `useContext` hook is used to consume a context that is provided by the Context API. Instead of using a `Context.Consumer` component, `useContext` allows you to directly access the context value.
+
+#### **Example**:
+
+```jsx
+import React, { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
+function ThemedComponent() {
+  const { theme } = useContext(ThemeContext); // Access the context value
+
+  return <div>Current Theme: {theme}</div>;
+}
+
+export default ThemedComponent;
+```
+
+---
+
+### 6. **Custom Hooks**
+
+#### **Description**:
+Custom hooks are JavaScript functions whose names start with "use" and that may call other hooks inside them. They allow you to extract and reuse logic in different components.
+
+#### **Example** (Custom Hook for Fetching Data):
+
+```jsx
+import { useState, useEffect } from 'react';
+
+function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      });
+  }, [url]);
+
+  return { data, loading };
+}
+
+export default useFetch;
+```
+
+**Using the Custom Hook**:
+
+```jsx
+import React from 'react';
+import useFetch from './useFetch';
+
+function DataDisplay() {
+  const { data, loading } = useFetch('https://api.example.com/data');
+
+  if (loading) return <p>Loading...</p>;
+
+  return (
+    <ul>
+      {data.map((item) => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  );
+}
+
+export default DataDisplay;
+```
+
+---
+
+### Practice Tasks:
+1. **Create a Theme Switcher**: Use the Context API to create a theme switcher (light/dark mode) that can be toggled across different components.
+2. **API Fetching with useEffect**: Build a component that fetches data from an API and displays it using `useEffect`.
+3. **Build Custom Hooks**: Create your own custom hook to handle form validation or fetching data.
+
+By the end of Day 6, you should be comfortable with React's Context API for global state management and understand how to use Hooks to manage state and side effects in functional components.

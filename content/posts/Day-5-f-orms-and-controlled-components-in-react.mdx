@@ -1,0 +1,225 @@
+---
+title: Day 5 Forms and Controlled Components in React
+description: Today's focus is on forms in React and the concept of controlled components. Forms are essential for capturing user input, and controlled components offer a way to manage and control the state of form inputs.
+date: 2024-07-02
+keywords: Forms and Controlled
+---
+
+
+### 1. **Basic Forms in React**
+
+#### **Description**:
+In React, forms are used to collect input from the user. A controlled form means that the form input values are controlled by the state of the component, not by the DOM itself. This allows React to manage the state of form elements and update them dynamically.
+
+#### **Example**:
+
+```jsx
+import React, { useState } from 'react';
+
+function MyForm() {
+  const [inputValue, setInputValue] = useState(""); // Controlled input state
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value); // Updating state on change
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitted: ", inputValue); // Log the input value
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Name:
+        <input type="text" value={inputValue} onChange={handleChange} />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default MyForm;
+```
+
+---
+
+### 2. **Controlled vs Uncontrolled Components**
+
+#### **Description**:
+- **Controlled Components**: Input form elements are controlled by React state. The value is always derived from the component’s state, making it easier to track and manage changes.
+- **Uncontrolled Components**: The DOM itself manages the input value, and you can use `ref` to access the value directly without using React state.
+
+#### **Example** (Controlled Component):
+
+```jsx
+import React, { useState } from 'react';
+
+function ControlledForm() {
+  const [value, setValue] = useState("initial");
+
+  const handleChange = (e) => setValue(e.target.value);
+
+  return (
+    <div>
+      <input type="text" value={value} onChange={handleChange} />
+      <p>Current value: {value}</p>
+    </div>
+  );
+}
+
+export default ControlledForm;
+```
+
+---
+
+### 3. **Handling Multiple Inputs**
+
+#### **Description**:
+In forms with multiple input fields, you can manage the state of all inputs using a single object in the `useState` hook. This approach reduces complexity and ensures that each input is handled in the same way.
+
+#### **Example**:
+
+```jsx
+import React, { useState } from 'react';
+
+function MultiInputForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData, // Spread the existing form data
+      [e.target.name]: e.target.value // Update the specific input field
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form data submitted: ", formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Name:
+        <input type="text" name="name" value={formData.name} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Email:
+        <input type="email" name="email" value={formData.email} onChange={handleChange} />
+      </label>
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default MultiInputForm;
+```
+
+---
+
+### 4. **Form Validation**
+
+#### **Description**:
+Form validation ensures that the user inputs valid data before the form is submitted. You can add basic validation checks within the form and display error messages based on the validation results.
+
+#### **Example**:
+
+```jsx
+import React, { useState } from 'react';
+
+function ValidationForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: ""
+  });
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name) newErrors.name = "Name is required";
+    if (!formData.email) newErrors.email = "Email is required";
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length === 0) {
+      console.log("Form submitted: ", formData);
+    } else {
+      setErrors(validationErrors);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Name:
+        <input type="text" name="name" value={formData.name} onChange={handleChange} />
+        {errors.name && <span style={{ color: "red" }}>{errors.name}</span>}
+      </label>
+      <br />
+      <label>
+        Email:
+        <input type="email" name="email" value={formData.email} onChange={handleChange} />
+        {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
+      </label>
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default ValidationForm;
+```
+
+---
+
+### 5. **React Hook Form for Simplified Form Handling**
+
+#### **Description**:
+`React Hook Form` is a library that simplifies form handling and validation in React. It reduces the amount of boilerplate code and optimizes performance by minimizing re-renders.
+
+#### **Example**:
+
+```jsx
+import React from 'react';
+import { useForm } from 'react-hook-form';
+
+function HookForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = (data) => console.log("Submitted Data: ", data);
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("name", { required: true })} placeholder="Name" />
+      {errors.name && <span>Name is required</span>}
+      <br />
+      <input {...register("email", { required: true })} type="email" placeholder="Email" />
+      {errors.email && <span>Email is required</span>}
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default HookForm;
+```
+
+---
+
+With this structure, each concept is clearly defined with both a **description** and **example**, making it easier to understand and apply in practice.
